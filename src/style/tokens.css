@@ -1,0 +1,98 @@
+:root {
+  --font-xp-ui: Tahoma, "Microsoft Sans Serif", Verdana, Arial, sans-serif;
+  --font-xp-display: "Trebuchet MS", Tahoma, Verdana, Arial, sans-serif;
+  --font-xp-logo: "Trebuchet MS", Tahoma, Verdana, Arial, sans-serif;
+  --font-xp-mono: "Lucida Console", "Courier New", monospace;
+  --font-system: var(--font-xp-ui);
+  --xp-font-size: 12px;
+  --xp-screen-scale: clamp(1.12, 1.7vmin, 1.9);
+  --xp-boot-width: min(96vw, 132dvh, clamp(560px, 100vmin, 1540px));
+  --xp-screen-band-top: clamp(54px, 8dvh, 112px);
+  --xp-screen-band-bottom: clamp(70px, 10dvh, 122px);
+  --xp-screen-stripe: clamp(2px, 0.28vmin, 4px);
+  --xp-system-gap: clamp(18px, 3.4vmin, 58px);
+  --xp-login-logo-size: clamp(136px, 14vmin, 232px);
+  --xp-login-panel-width: min(calc(100vw - 24px), clamp(390px, 39vmin, 560px));
+  --xp-login-avatar-size: clamp(52px, 5.8vmin, 82px);
+  --xp-login-card-min-height: clamp(84px, 9.6vmin, 128px);
+  --xp-welcome-text-size: clamp(58px, 10.5vmin, 148px);
+  --desktop-wallpaper: none;
+  --desktop-wallpaper-fit: cover;
+  --taskbar-height: 40px;
+  --desktop-padding: clamp(10px, 1.5vmin, 20px);
+  --desktop-icon-cell-width: clamp(88px, 8.4vmin, 120px);
+  --desktop-icon-cell-height: clamp(92px, 9.2vmin, 128px);
+  --desktop-icon-size: clamp(44px, 5vmin, 64px);
+  --desktop-icon-cell-width-large: clamp(98px, 9.5vmin, 132px);
+  --desktop-icon-cell-height-large: clamp(102px, 10.3vmin, 140px);
+  --desktop-icon-size-large: clamp(52px, 5.8vmin, 74px);
+  --desktop-icon-label-width: clamp(80px, 7.6vmin, 112px);
+  --window-titlebar-height: clamp(29px, 3.1vmin, 36px);
+  --window-border-size: clamp(3px, 0.32vmin, 4px);
+  --window-control-size: clamp(21px, 2.3vmin, 28px);
+  --window-icon-size: clamp(17px, 1.8vmin, 22px);
+  --window-radius: 7px 7px 0 0;
+  --window-border: #0750d8;
+  --window-title-active-a: #2d93ff;
+  --window-title-active-b: #0050d8;
+  --window-title-active-c: #0041b6;
+  --window-title-inactive-a: #8eb3e8;
+  --window-title-inactive-b: #658ed1;
+  --window-title-inactive-c: #5478ba;
+  --taskbar-a: #2f91ff;
+  --taskbar-b: #0b5bd7;
+  --taskbar-c: #003399;
+  --taskbar-button-a: #3989f5;
+  --taskbar-button-b: #0b48b4;
+  --start-green-a: #5ecb48;
+  --start-green-b: #27931f;
+  --start-green-c: #17620d;
+  --xp-panel: #ece9d8;
+  --xp-panel-light: #fffdf3;
+  --xp-blue: #0b55d9;
+  --xp-link: #0645ad;
+  --selection: #0a56d6;
+  --shadow-strong: rgba(0, 0, 0, 0.45);
+  --shadow-soft: rgba(0, 0, 0, 0.25);
+  --cursor-default: url("../../assets/kursory/arrow.png") 3 2, default;
+  --cursor-pointer: url("../../assets/kursory/hand.png") 7 2, pointer;
+  --cursor-text: url("../../assets/kursory/text-select.png") 15 15, text;
+  --cursor-move: url("../../assets/kursory/move.png") 15 15, move;
+  --cursor-resize-h: url("../../assets/kursory/resize-h.png") 15 15, ew-resize;
+  --cursor-resize-v: url("../../assets/kursory/resize-v.png") 15 15, ns-resize;
+  --cursor-resize-nw-se: url("../../assets/kursory/resize-nw-se.png") 15 15, nwse-resize;
+  --cursor-resize-sw-ne: url("../../assets/kursory/resize-sw-ne.png") 15 15, nesw-resize;
+}
+
+body[data-theme="luna-olive"] {
+  --window-border: #5f7f1f;
+  --window-title-active-a: #b1d167;
+  --window-title-active-b: #6e9f28;
+  --window-title-active-c: #496f17;
+  --taskbar-a: #a0c15b;
+  --taskbar-b: #6d9825;
+  --taskbar-c: #42660f;
+  --taskbar-button-a: #bed874;
+  --taskbar-button-b: #668b22;
+}
+
+body[data-theme="luna-silver"] {
+  --window-border: #6f7f9f;
+  --window-title-active-a: #d6dcee;
+  --window-title-active-b: #8f9fbd;
+  --window-title-active-c: #657391;
+  --taskbar-a: #c7d0e4;
+  --taskbar-b: #7e8eae;
+  --taskbar-c: #596a89;
+  --taskbar-button-a: #dce3f1;
+  --taskbar-button-b: #7d8ba6;
+}
+
+body[data-cursor-theme="xp-shadow"] {
+  cursor: var(--cursor-default);
+}
+
+body[data-cursor-theme="system"],
+body[data-cursor-theme="system"] * {
+  cursor: auto;
+}

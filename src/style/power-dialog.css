@@ -1,0 +1,236 @@
+/* Shared XP-style shutdown/logoff dialog used by login and desktop screens. */
+
+.xp-power-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 30dvh;
+  background: rgba(118, 118, 118, 0);
+  opacity: 0;
+  -webkit-backdrop-filter: grayscale(0) saturate(1) brightness(1);
+  backdrop-filter: grayscale(0) saturate(1) brightness(1);
+  transition:
+    opacity 420ms ease,
+    background-color 420ms ease,
+    -webkit-backdrop-filter 420ms ease,
+    backdrop-filter 420ms ease;
+}
+
+.xp-power-overlay.is-visible {
+  background: rgba(118, 118, 118, 0.32);
+  opacity: 1;
+  -webkit-backdrop-filter: grayscale(1) saturate(0.18) brightness(0.92);
+  backdrop-filter: grayscale(1) saturate(0.18) brightness(0.92);
+}
+
+@supports not ((backdrop-filter: grayscale(1)) or (-webkit-backdrop-filter: grayscale(1))) {
+  .xp-power-overlay.is-visible {
+    background: rgba(128, 128, 128, 0.62);
+  }
+}
+
+.xp-power-dialog {
+  display: flex;
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+  transition:
+    opacity 260ms ease 140ms,
+    transform 260ms ease 140ms;
+  width: 300px;
+  height: 190px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #000;
+  background: #092178;
+  color: #fff;
+  font-family: Tahoma, "Microsoft Sans Serif", Arial, sans-serif;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.48);
+}
+
+.xp-power-overlay.is-visible .xp-power-dialog {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.xp-power-dialog-naglowek {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  padding-left: 10px;
+  background: #092178;
+}
+
+.xp-power-dialog-tytul {
+  flex: 1;
+  color: #fff;
+  font-family: "Microsoft Sans Serif", Tahoma, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.xp-power-dialog-logo {
+  width: auto;
+  height: 30px;
+  margin-right: 5px;
+  object-fit: contain;
+}
+
+.xp-power-dialog-tresc {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-around;
+  gap: 12px;
+  padding: 0 30px;
+  background: linear-gradient(
+    to right,
+    #3349e0 0%,
+    #617ee6 47%,
+    #617ee6 53%,
+    #3349e0 100%
+  );
+}
+
+.xp-power-dialog-tresc::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: block;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(255, 255, 255, 0.3) 40%,
+    rgba(255, 255, 255, 0.3) 60%,
+    transparent 100%
+  );
+  content: "";
+}
+
+.xp-power-button {
+  position: relative;
+  display: flex;
+  min-width: 56px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: Tahoma, "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  cursor: var(--cursor-hand), pointer;
+}
+
+.xp-power-button-ikona {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.xp-power-button-restart .xp-power-button-ikona {
+  width: 33px;
+  height: 33px;
+  margin-top: -3px;
+}
+
+.xp-power-button-przelacz-uzytkownika .xp-power-button-ikona {
+  border: 1px solid #fff;
+  border-radius: 3px;
+}
+
+.xp-power-button:hover .xp-power-button-ikona,
+.xp-power-button:focus-visible .xp-power-button-ikona {
+  filter: brightness(1.1);
+}
+
+.xp-power-button:active .xp-power-button-ikona {
+  filter: brightness(0.7);
+}
+
+.xp-power-button:focus-visible {
+  outline: 1px dotted #fff;
+  outline-offset: 3px;
+}
+
+.xp-power-button.is-disabled {
+  color: #8d8d8d;
+  cursor: var(--cursor-default), default;
+}
+
+.xp-power-button.is-disabled .xp-power-button-ikona {
+  opacity: 0.32;
+  filter: grayscale(0.2);
+}
+
+.xp-power-button.is-disabled:hover .xp-power-button-ikona,
+.xp-power-button.is-disabled:active .xp-power-button-ikona {
+  filter: grayscale(0.2);
+}
+
+.xp-power-dialog-stopka {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  justify-content: flex-end;
+  background: #092178;
+}
+
+.xp-power-dialog-anuluj {
+  height: 17px;
+  min-width: 58px;
+  margin-right: 10px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 1px;
+  background: rgb(240, 240, 240);
+  color: #000;
+  font-family: Tahoma, "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  line-height: 10px;
+  outline: none;
+  box-shadow:
+    2px 2px 4px 1px #0005b0,
+    2px 2px 2px 0 #fff,
+    inset 0 0 0 1px skyblue,
+    inset 2px -2px skyblue;
+}
+
+.xp-power-dialog-anuluj:hover,
+.xp-power-dialog-anuluj:focus-visible {
+  box-shadow:
+    1px 1px #000,
+    1px 1px 2px 0 #fff,
+    inset 0 0 0 1px orange,
+    inset 2px -2px orange;
+}
+
+.xp-power-dialog-anuluj:active {
+  background: rgb(220, 220, 220);
+  box-shadow: none;
+}
+
+@media (max-width: 560px) {
+  .xp-power-overlay {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .xp-power-dialog {
+    transform: translateY(8px) scale(0.95);
+    transform-origin: center;
+  }
+
+  .xp-power-overlay.is-visible .xp-power-dialog {
+    transform: translateY(0) scale(0.95);
+  }
+}

@@ -1,0 +1,200 @@
+.xp-window {
+  position: absolute;
+  display: grid;
+  grid-template-rows: var(--window-titlebar-height) 1fr;
+  min-width: 220px;
+  min-height: 140px;
+  overflow: hidden;
+  border: var(--window-border-size) solid var(--window-border);
+  border-top-width: 0;
+  border-radius: var(--window-radius);
+  background: var(--xp-panel);
+  box-shadow: 3px 5px 15px var(--shadow-strong);
+}
+
+.xp-window.is-minimized {
+  display: none;
+}
+
+.xp-window-belka {
+  display: flex;
+  height: var(--window-titlebar-height);
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(3px, 0.4vmin, 5px) clamp(5px, 0.6vmin, 8px) clamp(3px, 0.4vmin, 5px) clamp(6px, 0.7vmin, 9px);
+  background: linear-gradient(var(--window-title-inactive-a), var(--window-title-inactive-b) 55%, var(--window-title-inactive-c));
+  color: #eaf2ff;
+  cursor: var(--cursor-move);
+}
+
+.xp-window.is-active .xp-window-belka {
+  background: linear-gradient(var(--window-title-active-a), var(--window-title-active-b) 50%, var(--window-title-active-c));
+  color: #fff;
+}
+
+.xp-window-tytul {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(6px, 0.7vmin, 9px);
+  font-weight: 700;
+  text-shadow: 1px 1px #0f347f;
+}
+
+.xp-window-tytul span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.xp-window-ikona {
+  width: var(--window-icon-size);
+  height: var(--window-icon-size);
+  flex: 0 0 auto;
+}
+
+.xp-window-przyciski {
+  display: flex;
+  gap: clamp(2px, 0.3vmin, 4px);
+  flex: 0 0 auto;
+}
+
+.xp-window-przycisk {
+  position: relative;
+  width: var(--window-control-size);
+  height: var(--window-control-size);
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 3px;
+  background: linear-gradient(#77a8ff, #1f62d3 45%, #0d3f9f);
+  color: #fff;
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.xp-window-przycisk:hover {
+  filter: brightness(1.12);
+}
+
+.xp-window-przycisk-zamknij {
+  background: linear-gradient(#ffb18c, #e65d28 45%, #b83214);
+}
+
+.xp-window-przycisk::before,
+.xp-window-przycisk::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+}
+
+.xp-window-przycisk-minimalizuj::before {
+  right: 24%;
+  bottom: 24%;
+  left: 24%;
+  height: 2px;
+}
+
+.xp-window-przycisk-maksymalizuj::before {
+  inset: 24%;
+  border: 1px solid #fff;
+  background: transparent;
+}
+
+.xp-window-przycisk-zamknij::before,
+.xp-window-przycisk-zamknij::after {
+  top: 24%;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 52%;
+}
+
+.xp-window-przycisk-zamknij::before {
+  transform: rotate(45deg);
+}
+
+.xp-window-przycisk-zamknij::after {
+  transform: rotate(-45deg);
+}
+
+.xp-window-tresc {
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #083b9e;
+  border-top: 0;
+  background: var(--xp-panel);
+  color: #000;
+}
+
+.xp-window-zmiana-rozmiaru {
+  position: absolute;
+  z-index: 2;
+}
+
+.xp-window-zmiana-rozmiaru-n,
+.xp-window-zmiana-rozmiaru-s {
+  right: calc(var(--window-border-size) + var(--window-border-size));
+  left: calc(var(--window-border-size) + var(--window-border-size));
+  height: calc(var(--window-border-size) + 2px);
+  cursor: var(--cursor-resize-v);
+}
+
+.xp-window-zmiana-rozmiaru-n {
+  top: 0;
+}
+
+.xp-window-zmiana-rozmiaru-s {
+  bottom: 0;
+}
+
+.xp-window-zmiana-rozmiaru-e,
+.xp-window-zmiana-rozmiaru-w {
+  top: var(--window-titlebar-height);
+  bottom: calc(var(--window-border-size) + var(--window-border-size));
+  width: calc(var(--window-border-size) + 2px);
+  cursor: var(--cursor-resize-h);
+}
+
+.xp-window-zmiana-rozmiaru-e {
+  right: 0;
+}
+
+.xp-window-zmiana-rozmiaru-w {
+  left: 0;
+}
+
+.xp-window-zmiana-rozmiaru-ne,
+.xp-window-zmiana-rozmiaru-sw,
+.xp-window-zmiana-rozmiaru-nw,
+.xp-window-zmiana-rozmiaru-se {
+  width: clamp(9px, 1vmin, 13px);
+  height: clamp(9px, 1vmin, 13px);
+}
+
+.xp-window-zmiana-rozmiaru-ne,
+.xp-window-zmiana-rozmiaru-sw {
+  cursor: var(--cursor-resize-sw-ne);
+}
+
+.xp-window-zmiana-rozmiaru-nw,
+.xp-window-zmiana-rozmiaru-se {
+  cursor: var(--cursor-resize-nw-se);
+}
+
+.xp-window-zmiana-rozmiaru-ne {
+  top: 0;
+  right: 0;
+}
+
+.xp-window-zmiana-rozmiaru-nw {
+  top: 0;
+  left: 0;
+}
+
+.xp-window-zmiana-rozmiaru-se {
+  right: 0;
+  bottom: 0;
+}
+
+.xp-window-zmiana-rozmiaru-sw {
+  bottom: 0;
+  left: 0;
+}

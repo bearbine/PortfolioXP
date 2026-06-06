@@ -1,0 +1,132 @@
+/* Global responsive tweaks outside the login system. */
+
+@media (max-width: 760px) {
+  :root {
+    --xp-screen-band-top: clamp(50px, 8dvh, 68px);
+    --xp-screen-band-bottom: clamp(74px, 12dvh, 94px);
+    --xp-login-panel-width: min(calc(100vw - 32px), 430px);
+    --taskbar-height: 36px;
+    --desktop-padding: 8px;
+    --desktop-icon-cell-width: clamp(76px, 19vw, 88px);
+    --desktop-icon-cell-height: clamp(80px, 20vw, 92px);
+    --desktop-icon-size: clamp(38px, 10vw, 44px);
+    --desktop-icon-cell-width-large: clamp(88px, 22vw, 102px);
+    --desktop-icon-cell-height-large: clamp(92px, 23vw, 106px);
+    --desktop-icon-size-large: clamp(46px, 12vw, 54px);
+    --desktop-icon-label-width: clamp(70px, 18vw, 84px);
+  }
+
+  .desktop-icons {
+    right: 6px;
+  }
+
+  .taskbar-start {
+    height: 100%;
+    padding: 0;
+  }
+
+  .taskbar-button {
+    min-width: 46px;
+    flex-basis: 92px;
+  }
+
+  .taskbar-button span {
+    display: none;
+  }
+
+  .taskbar-tray {
+    gap: 2px;
+    margin-left: 5px;
+    padding: 0 5px;
+  }
+
+  .taskbar-tray-przycisk:nth-of-type(2),
+  .taskbar-tray-przycisk:nth-of-type(4) {
+    display: none;
+  }
+
+  .taskbar-tray-zegar-przycisk {
+    min-width: 46px;
+  }
+
+  .start-menu-tresc {
+    grid-template-columns: 1fr;
+    max-height: calc(100dvh - var(--taskbar-height) - 118px);
+  }
+
+  .start-menu-miejsca {
+    display: none;
+  }
+
+  .explorer-layout,
+  .paint-body {
+    grid-template-columns: 1fr;
+  }
+
+  .explorer-side {
+    display: none;
+  }
+
+  .paint-tools {
+    grid-template-columns: repeat(8, 22px);
+    border-right: 0;
+    border-bottom: 1px solid #999;
+  }
+
+  .settings-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 460px) {
+  .start-menu {
+    width: calc(100vw - 6px);
+  }
+
+  .paint-palette {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .start-menu {
+    width: min(382px, calc(100vw - 4px));
+  }
+
+  .start-menu-kolumna {
+    width: 50%;
+    min-height: 330px;
+  }
+
+  .start-menu-kolumna-prawa {
+    width: 50%;
+  }
+
+  .start-submenu {
+    min-width: 176px;
+  }
+}
+
+
+@media (max-width: 760px) {
+  .start-menu {
+    width: min(500px, calc(100vw - 8px));
+    font-size: 12px;
+  }
+
+  .start-menu-kolumna {
+    width: min(250px, calc((100vw - 8px) / 2));
+    min-height: 390px;
+  }
+
+  .start-menu-kolumna-prawa {
+    width: min(250px, calc((100vw - 8px) / 2));
+  }
+
+  .start-item[data-item-id="all-programs"] > .start-submenu,
+  .start-menu-kolumna-prawa .start-item > .start-submenu {
+    left: auto;
+    right: 0;
+    bottom: 32px;
+  }
+}

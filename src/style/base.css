@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+  background: #000;
+  font-family: var(--font-system);
+  font-size: var(--xp-font-size);
+}
+
+button,
+select,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+select,
+label,
+[role="button"] {
+  cursor: var(--cursor-pointer);
+}
+
+input,
+textarea {
+  cursor: var(--cursor-text);
+}
+
+button {
+  color: inherit;
+}
+
+noscript {
+  display: block;
+  padding: 16px;
+  background: #ffffe1;
+  color: #000;
+}
+
+.app-root {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.xp-button {
+  min-height: 24px;
+  padding: 3px 14px;
+  border: 1px solid #003c74;
+  border-radius: 3px;
+  background: linear-gradient(#fff, #ecebe1 48%, #d8d2c1 52%, #f6f4ed);
+  color: #000;
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.xp-button:hover {
+  border-color: #f0a000;
+  box-shadow: inset 1px 1px 0 #fff, 0 0 0 1px #ffe8a6;
+}
+
+.xp-button:active {
+  background: linear-gradient(#d8d2c1, #f6f4ed);
+}
+
+.xp-button:disabled {
+  color: #777;
+  border-color: #9b9b9b;
+  background: #e6e2d6;
+}
+
+.xp-button-small {
+  min-height: 22px;
+  padding: 2px 9px;
+}
+
+.menu-button {
+  min-width: 44px;
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #000;
+  text-align: left;
+}
+
+.menu-button:hover,
+.menu-button:focus-visible {
+  border-color: #316ac5;
+  background: #c1d2ee;
+  outline: none;
+}
+
+.is-missing-asset {
+  background: repeating-linear-gradient(45deg, #eee, #eee 4px, #ccc 4px, #ccc 8px);
+}
