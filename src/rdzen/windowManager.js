@@ -1,6 +1,7 @@
 // Menedzer okien.
 // Odpowiada za otwieranie, fokus, minimalizacje, drag, resize i caly ten desktopowy balagan.
-import { createButton, createElement, createImage, isInteractiveElement } from "./dom.js";
+import { createElement, createImage, isInteractiveElement } from "./dom.js";
+import { utworzKontrolkiOkna } from "../interfejs/kontrolkiOkna.js";
 
 const RESIZE_DIRECTIONS = ["n", "e", "s", "w", "ne", "nw", "se", "sw"];
 
@@ -237,11 +238,11 @@ export class MenedzerOkien extends EventTarget {
       createImage(windowState.icon, "", "xp-window-ikona"),
       createElement("span", { text: windowState.title })
     ]);
-    const controls = createElement("div", { className: "xp-window-przyciski" }, [
-      createButton("", "xp-window-przycisk xp-window-przycisk-minimalizuj", () => this.minimize(windowState.id), { "aria-label": "Minimize" }),
-      createButton("", "xp-window-przycisk xp-window-przycisk-maksymalizuj", () => this.toggleMaximize(windowState.id), { "aria-label": "Maximize or restore" }),
-      createButton("", "xp-window-przycisk xp-window-przycisk-zamknij", () => this.close(windowState.id), { "aria-label": "Close" })
-    ]);
+    const controls = utworzKontrolkiOkna({
+      onMinimize: () => this.minimize(windowState.id),
+      onMaximize: () => this.toggleMaximize(windowState.id),
+      onClose: () => this.close(windowState.id)
+    });
     titlebar.append(title, controls);
 
     const content = createElement("div", { className: "xp-window-tresc" });

@@ -4,6 +4,39 @@ Wszystkie ważniejsze zmiany w projekcie **PortfolioXP** są zapisywane w tym pl
 
 ---
 
+## [0.1.58] - 2026-06-16
+
+### Dodano
+
+* Dodano wspólny komponent kontrolek okna dla przycisków minimalizacji, maksymalizacji, przywracania i zamykania.
+* Dodano graficzne kontrolki okien w stylu Windows XP.
+* Dodano nowe zasoby graficzne używane w oknie tworzenia konta.
+
+### Zmieniono
+
+* Przebudowano okno tworzenia konta tak, aby korzystało z tego samego systemu ramek co aplikacje na pulpicie.
+* Ujednolicono pasek tytułu okna tworzenia konta z pozostałymi oknami systemu.
+* Poprawiono układ formularza tworzenia konta.
+* Zmieniono działanie sekcji hasła w formularzu tworzenia konta — pola hasła pojawiają się dopiero po włączeniu ochrony hasłem.
+* Zmieniono wygląd nagłówka w oknie tworzenia konta, aby był bardziej spójny z ekranem logowania i ekranem startowym.
+* Dostosowano odstępy napisów w dolnej części ekranu startowego, aby elementy nie znajdowały się zbyt blisko krawędzi ekranu.
+
+### Poprawiono
+
+* Poprawiono niespójny wygląd kontrolek okien między aplikacjami na pulpicie i oknami dialogowymi.
+* Poprawiono wygląd obramowań okien.
+* Poprawiono przesuwanie się pól formularza po włączeniu sekcji hasła.
+* Poprawiono działanie przycisków pokazywania i ukrywania hasła.
+* Poprawiono spójność brandingu PortfolioXP w oknie tworzenia konta.
+
+### Refaktoryzacja
+
+* Wydzielono powtarzalne kontrolki okien do osobnego modułu interfejsu.
+* Usunięto stare, ręcznie tworzone przyciski paska tytułu z okna tworzenia konta.
+* Uporządkowano nieużywane style związane ze starszym układem okna tworzenia konta.
+
+---
+
 ## [0.1.57] - 2026-06-06
 
 ### Dodano

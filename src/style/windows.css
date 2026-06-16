@@ -22,8 +22,8 @@
   align-items: center;
   justify-content: space-between;
   padding: clamp(3px, 0.4vmin, 5px) clamp(5px, 0.6vmin, 8px) clamp(3px, 0.4vmin, 5px) clamp(6px, 0.7vmin, 9px);
-  background: linear-gradient(var(--window-title-inactive-a), var(--window-title-inactive-b) 55%, var(--window-title-inactive-c));
-  color: #eaf2ff;
+  background: linear-gradient(var(--window-title-active-a), var(--window-title-active-b) 50%, var(--window-title-active-c));
+  color: #fff;
   cursor: var(--cursor-move);
 }
 
@@ -53,73 +53,105 @@
   flex: 0 0 auto;
 }
 
-.xp-window-przyciski {
+.xp-window-kontrolki {
   display: flex;
-  gap: clamp(2px, 0.3vmin, 4px);
+  gap: 2px;
   flex: 0 0 auto;
+  align-items: center;
 }
 
-.xp-window-przycisk {
-  position: relative;
-  width: var(--window-control-size);
-  height: var(--window-control-size);
+.xp-window-kontrolka {
+  width: 21px;
+  height: 21px;
+  min-width: 21px;
+  min-height: 21px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.88);
-  border-radius: 3px;
-  background: linear-gradient(#77a8ff, #1f62d3 45%, #0d3f9f);
-  color: #fff;
-  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.45);
+  border: 0;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  cursor: var(--cursor-default);
 }
 
-.xp-window-przycisk:hover {
-  filter: brightness(1.12);
+.xp-window-kontrolka:focus-visible {
+  outline: 1px dotted #fff;
+  outline-offset: -3px;
 }
 
-.xp-window-przycisk-zamknij {
-  background: linear-gradient(#ffb18c, #e65d28 45%, #b83214);
+.xp-window-kontrolka.is-disabled,
+.xp-window-kontrolka:disabled {
+  opacity: 1;
+  cursor: var(--cursor-default);
 }
 
-.xp-window-przycisk::before,
-.xp-window-przycisk::after {
-  content: "";
-  position: absolute;
-  background: #fff;
+.xp-window-kontrolka-minimalizuj {
+  background-image: url("/assets/interfejs/okna/kontrolki/minimize_normal.png");
 }
 
-.xp-window-przycisk-minimalizuj::before {
-  right: 24%;
-  bottom: 24%;
-  left: 24%;
-  height: 2px;
+.xp-window-kontrolka-minimalizuj:hover {
+  background-image: url("/assets/interfejs/okna/kontrolki/minimize_hover.png");
 }
 
-.xp-window-przycisk-maksymalizuj::before {
-  inset: 24%;
-  border: 1px solid #fff;
-  background: transparent;
+.xp-window-kontrolka-minimalizuj:active {
+  background-image: url("/assets/interfejs/okna/kontrolki/minimize_active.png");
 }
 
-.xp-window-przycisk-zamknij::before,
-.xp-window-przycisk-zamknij::after {
-  top: 24%;
-  left: calc(50% - 1px);
-  width: 2px;
-  height: 52%;
+.xp-window-kontrolka-minimalizuj.is-disabled,
+.xp-window-kontrolka-minimalizuj:disabled {
+  background-image: url("/assets/interfejs/okna/kontrolki/minimize_inactive.png");
 }
 
-.xp-window-przycisk-zamknij::before {
-  transform: rotate(45deg);
+.xp-window-kontrolka-maksymalizuj {
+  background-image: url("/assets/interfejs/okna/kontrolki/maximize_normal.png");
 }
 
-.xp-window-przycisk-zamknij::after {
-  transform: rotate(-45deg);
+.xp-window-kontrolka-maksymalizuj:hover {
+  background-image: url("/assets/interfejs/okna/kontrolki/maximize_hover.png");
+}
+
+.xp-window-kontrolka-maksymalizuj:active {
+  background-image: url("/assets/interfejs/okna/kontrolki/maximize_active.png");
+}
+
+.xp-window.is-maximized .xp-window-kontrolka-maksymalizuj {
+  background-image: url("/assets/interfejs/okna/kontrolki/restore_normal.png");
+}
+
+.xp-window.is-maximized .xp-window-kontrolka-maksymalizuj:hover {
+  background-image: url("/assets/interfejs/okna/kontrolki/restore_hover.png");
+}
+
+.xp-window.is-maximized .xp-window-kontrolka-maksymalizuj:active {
+  background-image: url("/assets/interfejs/okna/kontrolki/restore_active.png");
+}
+
+.xp-window-kontrolka-maksymalizuj.is-disabled,
+.xp-window-kontrolka-maksymalizuj:disabled {
+  background-image: url("/assets/interfejs/okna/kontrolki/maximize_inactive.png");
+}
+
+.xp-window-kontrolka-zamknij {
+  background-image: url("/assets/interfejs/okna/kontrolki/close_normal.png");
+}
+
+.xp-window-kontrolka-zamknij:hover {
+  background-image: url("/assets/interfejs/okna/kontrolki/close_hover.png");
+}
+
+.xp-window-kontrolka-zamknij:active {
+  background-image: url("/assets/interfejs/okna/kontrolki/close_active.png");
+}
+
+.xp-window-kontrolka-zamknij.is-disabled,
+.xp-window-kontrolka-zamknij:disabled {
+  background-image: url("/assets/interfejs/okna/kontrolki/close_inactive.png");
 }
 
 .xp-window-tresc {
   min-height: 0;
   overflow: hidden;
-  border: 1px solid #083b9e;
-  border-top: 0;
+  border: 0;
   background: var(--xp-panel);
   color: #000;
 }

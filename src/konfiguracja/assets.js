@@ -10,6 +10,9 @@ export const ASSETS = Object.freeze({
   }),
   login: Object.freeze({
     miniLogo: "/assets/logowanie/mini-logo.png",
+    accountDialogLogo: "/assets/logowanie/account-dialog-logo.png",
+    accountDialogWordmark: "/assets/logowanie/account-dialog-wordmark.png",
+    accountDialogIcon: "/assets/logowanie/account-dialog-icon.png",
     goButton: "/assets/logowanie/go-button.png",
     hintButton: "/assets/logowanie/hint-button.png",
     shutdownButton: "/assets/logowanie/shutdown-button.png",

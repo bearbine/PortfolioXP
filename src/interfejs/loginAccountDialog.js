@@ -1,13 +1,72 @@
 // Dialog tworzenia konta na ekranie logowania.
 // Troche formularza, troche walidacji, bez robienia z tego osobnej podstrony.
-import { AVATARS, getAvatar } from "../konfiguracja/assets.js";
+import { ASSETS, AVATARS, getAvatar } from "../konfiguracja/assets.js";
+import { SYSTEM_BRANDING } from "../konfiguracja/system.js";
 import { createButton, createElement, createImage } from "../rdzen/dom.js";
+import { utworzKontrolkiOkna } from "./kontrolkiOkna.js";
+
+function ustawWidocznoscHasla(input, button, widoczne) {
+  input.type = widoczne ? "text" : "password";
+  button.classList.toggle("is-visible", widoczne);
+  button.setAttribute("aria-pressed", String(widoczne));
+  button.setAttribute("aria-label", widoczne ? "Hide password" : "Show password");
+}
+
+function utworzPoleHaslaZPodgladem({ id, autocomplete }) {
+  const input = createElement("input", {
+    type: "password",
+    className: "login-account-password-input",
+    attrs: {
+      id,
+      maxlength: "64",
+      autocomplete
+    }
+  });
+
+  const button = createElement("button", {
+    type: "button",
+    className: "login-account-password-reveal",
+    attrs: {
+      "aria-label": "Show password",
+      "aria-pressed": "false"
+    }
+  });
+
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    ustawWidocznoscHasla(input, button, input.type !== "text");
+    window.setTimeout(() => input.focus(), 0);
+  });
+
+  const wrapper = createElement("div", {
+    className: "login-account-password-field"
+  }, [input, button]);
+
+  return {
+    wrapper,
+    input,
+    button,
+    ukryjPodglad: () => ustawWidocznoscHasla(input, button, false)
+  };
+}
+
+function ograniczPozycjeOkna(left, top, width, height) {
+  const margines = 8;
+  const maxLeft = Math.max(margines, window.innerWidth - width - margines);
+  const maxTop = Math.max(margines, window.innerHeight - height - margines);
+  return {
+    left: Math.min(Math.max(left, margines), maxLeft),
+    top: Math.min(Math.max(top, margines), maxTop)
+  };
+}
 
 // Dialog rejestracji ma własna walidacje, ale backend i tak sprawdza wszystko drugi raz.
 export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, menedzerDzwieku, onCreated, onClose }) {
   const state = {
     avatarId: AVATARS[0]?.id || "guest"
   };
+  let czyZamkniete = false;
+  let windowElement = null;
 
   const overlay = createElement("div", { className: "login-account-overlay" });
   const error = createElement("div", { className: "login-account-form-blad", attrs: { role: "alert" } });
@@ -18,7 +77,7 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
       id: "login-account-display-name",
       maxlength: "32",
       autocomplete: "off",
-      placeholder: "User"
+      placeholder: "Roman Kozar"
     }
   });
 
@@ -28,42 +87,58 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
       id: "login-account-login-name",
       maxlength: "42",
       autocomplete: "off",
-      placeholder: "user"
+      placeholder: "jujbnm"
     }
   });
 
   const passwordToggle = createElement("input", {
     type: "checkbox",
-    checked: true,
+    checked: false,
     attrs: {
       id: "login-account-password-toggle",
       "aria-describedby": "login-account-password-toggle-text"
     }
   });
 
-  const passwordInput = createElement("input", {
-    type: "password",
-    attrs: {
-      id: "login-account-password",
-      maxlength: "64",
-      autocomplete: "new-password"
-    }
+  const passwordField = utworzPoleHaslaZPodgladem({
+    id: "login-account-password",
+    autocomplete: "new-password"
   });
-
-  const passwordRepeatInput = createElement("input", {
-    type: "password",
-    attrs: {
-      id: "login-account-password-repeat",
-      maxlength: "64",
-      autocomplete: "new-password"
-    }
+  const passwordRepeatField = utworzPoleHaslaZPodgladem({
+    id: "login-account-password-repeat",
+    autocomplete: "new-password"
   });
+  const passwordInput = passwordField.input;
+  const passwordRepeatInput = passwordRepeatField.input;
 
-  const passwordGroup = createElement("div", { className: "login-account-password" }, [
+  const passwordGroup = createElement("div", { className: "login-account-password is-hidden" }, [
     createElement("label", { text: "Password", attrs: { for: "login-account-password" } }),
-    passwordInput,
+    passwordField.wrapper,
     createElement("label", { text: "Confirm password", attrs: { for: "login-account-password-repeat" } }),
-    passwordRepeatInput
+    passwordRepeatField.wrapper
+  ]);
+
+  const brandPanel = createElement("div", { className: "login-account-brand-panel" }, [
+    createElement("div", {
+      className: "login-account-brand-logo",
+      attrs: { "aria-label": "Windows XP" }
+    }, [
+      createImage(ASSETS.login.accountDialogLogo, "", "login-account-brand-flag"),
+      createElement("div", { className: "login-account-brand-text" }, [
+        createImage(ASSETS.login.accountDialogWordmark, "Windows XP", "login-account-brand-wordmark")
+      ])
+    ]),
+    createElement("div", { className: "login-account-brand-left", text: SYSTEM_BRANDING.footerLeft }),
+    createElement("div", { className: "login-account-brand-right" }, [
+      createElement("span", {
+        className: "login-account-brand-right-text",
+        text: SYSTEM_BRANDING.footerRight.replace(/®/g, "")
+      }),
+      createElement("sup", {
+        className: "login-account-brand-right-mark",
+        text: SYSTEM_BRANDING.registeredMark
+      })
+    ])
   ]);
 
   const avatarPreview = createImage(getAvatar(state.avatarId).path, "", "login-account-avatar-preview-obraz");
@@ -108,6 +183,11 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
   avatarPickerGrid.append(...avatarButtons);
 
   const close = () => {
+    if (czyZamkniete) {
+      return;
+    }
+    czyZamkniete = true;
+    closeAvatarPicker();
     overlay.classList.remove("is-visible");
     window.setTimeout(() => {
       overlay.remove();
@@ -115,18 +195,47 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
     }, 180);
   };
 
-  const fakeWindowButton = (label, title) => {
-    const button = createElement("button", {
-      type: "button",
-      className: "login-account-titlebar-przycisk is-disabled",
-      text: label,
-      attrs: { title, "aria-disabled": "true" }
-    });
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      menedzerDzwieku.play("click", { volume: 0.18 });
-    });
-    return button;
+  const ustawPozycjeAvatarPickera = () => {
+    if (!windowElement) {
+      return;
+    }
+    const rect = windowElement.getBoundingClientRect();
+    const pickerWidth = Math.min(340, window.innerWidth - 16);
+    const left = Math.min(Math.max(rect.left + 22, 8), window.innerWidth - pickerWidth - 8);
+    const top = Math.min(Math.max(rect.top + 82, 8), Math.max(8, window.innerHeight - 290));
+    avatarPicker.style.left = `${Math.round(left)}px`;
+    avatarPicker.style.top = `${Math.round(top)}px`;
+    avatarPicker.style.width = `${Math.round(pickerWidth)}px`;
+  };
+
+  const ustawPozycjeOkna = (left, top) => {
+    if (!windowElement) {
+      return;
+    }
+    const rect = windowElement.getBoundingClientRect();
+    const pozycja = ograniczPozycjeOkna(left, top, rect.width, rect.height);
+    windowElement.classList.add("is-dragged");
+    windowElement.style.left = `${Math.round(pozycja.left)}px`;
+    windowElement.style.top = `${Math.round(pozycja.top)}px`;
+    if (avatarPicker.classList.contains("is-open")) {
+      ustawPozycjeAvatarPickera();
+    }
+  };
+
+  const startDragOkna = (event) => {
+    if (event.button !== 0 || event.target.closest("button")) {
+      return;
+    }
+    event.preventDefault();
+    closeAvatarPicker();
+    const rect = windowElement.getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    const offsetY = event.clientY - rect.top;
+    const abort = new AbortController();
+    const onMove = (moveEvent) => ustawPozycjeOkna(moveEvent.clientX - offsetX, moveEvent.clientY - offsetY);
+    const onEnd = () => abort.abort();
+    window.addEventListener("pointermove", onMove, { signal: abort.signal });
+    window.addEventListener("pointerup", onEnd, { once: true, signal: abort.signal });
   };
 
   const openAvatarPickerButton = createElement("button", {
@@ -143,7 +252,7 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
     ])
   ]);
 
-  const passwordToggleRow = createElement("div", { className: "login-account-checkbox" }, [
+  const passwordToggleRow = createElement("label", { className: "login-account-checkbox" }, [
     passwordToggle,
     createElement("span", {
       text: "Use password for this account",
@@ -178,7 +287,13 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
   }, [
     createElement("div", { className: "login-avatar-picker-titlebar" }, [
       createElement("span", { text: "Choose account picture" }),
-      createButton("X", "login-avatar-picker-close", closeAvatarPicker, { "aria-label": "Close picture chooser" })
+      utworzKontrolkiOkna({
+        onClose: closeAvatarPicker,
+        showMinimize: false,
+        showMaximize: false,
+        closeLabel: "Close picture chooser",
+        closeTitle: "Close"
+      })
     ]),
     createElement("div", { className: "login-avatar-picker-body" }, [
       createElement("p", { className: "login-avatar-picker-help", text: "Select a picture for this account." }),
@@ -187,6 +302,7 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
   ]);
 
   openAvatarPickerButton.addEventListener("click", () => {
+    ustawPozycjeAvatarPickera();
     avatarPicker.classList.add("is-open");
     menedzerDzwieku.play("click", { volume: 0.2 });
   });
@@ -200,16 +316,20 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
     passwordGroup.classList.toggle("is-hidden", !enabled);
     passwordInput.disabled = !enabled;
     passwordRepeatInput.disabled = !enabled;
+    passwordField.button.disabled = !enabled;
+    passwordRepeatField.button.disabled = !enabled;
     if (enabled) {
       window.setTimeout(() => passwordInput.focus(), 0);
     } else {
-      passwordInput.value = "";
-      passwordRepeatInput.value = "";
+      passwordField.ukryjPodglad();
+      passwordRepeatField.ukryjPodglad();
     }
   });
 
-  passwordInput.disabled = false;
-  passwordRepeatInput.disabled = false;
+  passwordInput.disabled = true;
+  passwordRepeatInput.disabled = true;
+  passwordField.button.disabled = true;
+  passwordRepeatField.button.disabled = true;
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -272,24 +392,39 @@ export function utworzOknoKontaLogowania({ serwisAutoryzacji, magazynProfili, me
     }
   });
 
-  const windowElement = createElement("section", {
-    className: "login-account-window",
-    attrs: { role: "dialog", "aria-label": "Create a new account" }
-  }, [
-    createElement("div", { className: "login-account-titlebar" }, [
-      createElement("span", { className: "login-account-titlebar-tytul", text: "Create a new account" }),
-      createElement("div", { className: "login-account-titlebar-przyciski" }, [
-        fakeWindowButton("_", "Minimize is locked in this window"),
-        fakeWindowButton("[]", "Maximize is locked in this window"),
-        createButton("X", "login-account-titlebar-przycisk", close, { "aria-label": "Close" })
-      ])
+  const titlebar = createElement("div", { className: "xp-window-belka login-account-titlebar" }, [
+    createElement("div", { className: "xp-window-tytul login-account-titlebar-tytul" }, [
+      createImage(ASSETS.login.accountDialogIcon, "", "xp-window-ikona login-account-titlebar-ikona"),
+      createElement("span", { text: "Create a new account" })
     ]),
-    form,
-    avatarPicker
+    utworzKontrolkiOkna({
+      onMinimize: close,
+      onClose: close,
+      canMaximize: false,
+      minimizeLabel: "Hide",
+      minimizeTitle: "Hide"
+    })
   ]);
 
-  overlay.append(windowElement);
-  window.requestAnimationFrame(() => overlay.classList.add("is-visible"));
+  windowElement = createElement("section", {
+    className: "xp-window login-account-window",
+    attrs: { role: "dialog", "aria-label": "Create a new account" }
+  }, [
+    titlebar,
+    createElement("div", { className: "xp-window-tresc login-account-tresc" }, [
+      brandPanel,
+      form
+    ])
+  ]);
+
+  titlebar.addEventListener("pointerdown", startDragOkna);
+
+  overlay.append(windowElement, avatarPicker);
+  window.requestAnimationFrame(() => {
+    const rect = windowElement.getBoundingClientRect();
+    ustawPozycjeOkna(rect.left, rect.top);
+    overlay.classList.add("is-visible");
+  });
   window.setTimeout(() => displayNameInput.focus(), 0);
 
   return {

@@ -406,65 +406,148 @@
   opacity: 1;
 }
 
-.login-account-window {
+.login-account-window.xp-window {
   position: relative;
   width: min(620px, calc(100vw - 30px));
-  overflow: hidden;
-  border: 1px solid #003c74;
-  border-radius: 3px 3px 2px 2px;
-  background: #ece9d8;
+  min-height: 0;
+  grid-template-rows: var(--window-titlebar-height) auto;
   color: #000;
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42);
 }
 
-.login-account-titlebar {
-  display: flex;
-  min-height: 30px;
+.login-account-window.xp-window.is-dragged {
+  position: fixed;
+  z-index: 41;
+}
+
+.login-account-titlebar.xp-window-belka {
+  cursor: var(--cursor-move);
+  touch-action: none;
+}
+
+.login-account-titlebar .login-account-titlebar-tytul {
+  min-width: 0;
   align-items: center;
-  justify-content: space-between;
-  padding: 2px 3px 2px 7px;
-  background: linear-gradient(#32a2ff 0%, #0066f0 18%, #0050d7 62%, #003b9e 100%);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  text-shadow: 1px 1px #073282;
+  gap: 6px;
+  line-height: 1;
 }
 
-.login-account-titlebar-tytul {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.login-account-titlebar .login-account-titlebar-tytul span {
+  line-height: 1;
 }
 
-.login-account-titlebar-przyciski {
-  display: flex;
-  gap: 3px;
-  margin-left: 10px;
+.login-account-titlebar .login-account-titlebar-ikona {
+  display: block;
+  width: var(--window-icon-size);
+  height: var(--window-icon-size);
+  object-fit: contain;
 }
 
-.login-account-titlebar-przycisk {
-  display: grid;
+.login-account-titlebar .xp-window-kontrolka,
+.login-avatar-picker-titlebar .xp-window-kontrolka {
   width: 21px;
   height: 21px;
-  place-items: center;
-  padding: 0;
-  border: 1px solid #fff;
-  border-radius: 3px;
-  background: linear-gradient(#6aa8ff, #0b53d5 44%, #003a9f);
+  min-width: 21px;
+  min-height: 21px;
+}
+
+.login-account-tresc {
+  overflow: hidden;
+  background: #ece9d8;
+}
+
+.login-account-brand-panel {
+  position: relative;
+  height: 104px;
+  overflow: hidden;
+  background: linear-gradient(90deg, #6d8fe0 0%, #9cb8f1 48%, #6a89dc 100%);
+}
+
+.login-account-brand-panel::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 6px;
+  background: linear-gradient(90deg, rgba(242, 160, 68, 0) 0%, rgba(242, 160, 68, 0.18) 4%, rgba(242, 160, 68, 0.48) 10%, rgba(242, 160, 68, 0.82) 17%, #f2a044 26%, #f6a64c 52%, #f1a043 74%, rgba(223, 141, 66, 0.82) 83%, rgba(199, 126, 64, 0.48) 90%, rgba(199, 126, 64, 0.18) 96%, rgba(199, 126, 64, 0) 100%);
+}
+
+.login-account-brand-left {
+  position: absolute;
+  left: 11px;
+  bottom: 15px;
   color: #fff;
+  font-size: 12px;
+  line-height: 1.05;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.28);
+}
+
+.login-account-brand-right {
+  position: absolute;
+  right: 12px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: flex-start;
+  color: #fff;
+  font-family: "Trebuchet MS", Tahoma, Arial, sans-serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.7px;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.28);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+.login-account-brand-right-text {
+  display: inline-block;
+  transform: skewX(-7deg);
+}
+
+.login-account-brand-right-mark {
+  margin-left: 2px;
   font-family: Tahoma, Arial, sans-serif;
-  font-size: 13px;
+  font-size: 7px;
+  font-style: normal;
   font-weight: 700;
   line-height: 1;
-  box-shadow: inset 1px 1px rgba(255, 255, 255, 0.45);
+  transform: translateY(-2px);
 }
 
-.login-account-titlebar-przycisk:last-child {
-  background: linear-gradient(#ffab8c, #e24b20 46%, #9e1708);
+.login-account-brand-logo {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 3px);
+  display: grid;
+  width: 300px;
+  grid-template-columns: 80px 190px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transform: translate(-50%, -50%);
 }
 
-.login-account-titlebar-przycisk.is-disabled {
-  opacity: 0.75;
+.login-account-brand-flag {
+  display: block;
+  width: 80px;
+  height: auto;
+  filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.13));
+}
+
+.login-account-brand-text {
+  display: grid;
+  align-content: center;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.16);
+}
+
+.login-account-brand-wordmark {
+  display: block;
+  width: 190px;
+  height: auto;
 }
 
 .login-account-form {
@@ -478,6 +561,7 @@
 .login-account-form-tresc {
   display: grid;
   grid-template-columns: 150px minmax(0, 1fr);
+  align-items: start;
   gap: 22px;
 }
 
@@ -516,8 +600,10 @@
 
 .login-account-fields {
   display: grid;
-  gap: 12px;
   min-width: 0;
+  align-self: start;
+  align-content: start;
+  gap: 12px;
 }
 
 .login-account-form-siatka,
@@ -538,6 +624,61 @@
   color: #000;
   font-family: var(--font-xp-ui);
   font-size: 12px;
+}
+
+.login-account-password-field {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  align-items: stretch;
+}
+
+.login-account-password-field input[type="text"],
+.login-account-password-field input[type="password"] {
+  border-right: 0;
+}
+
+.login-account-password-field input::-ms-reveal,
+.login-account-password-field input::-ms-clear {
+  display: none;
+}
+
+.login-account-password-reveal {
+  position: relative;
+  display: grid;
+  width: 26px;
+  height: 23px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #7f9db9;
+  background: linear-gradient(#fff, #ece9d8);
+  color: #1c3f95;
+  font-family: var(--font-xp-ui);
+  cursor: var(--cursor-default) !important;
+}
+
+.login-account-password-reveal::before {
+  content: "";
+  display: block;
+  width: 13px;
+  height: 8px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, currentColor 0 2px, transparent 2.5px);
+}
+
+.login-account-password-reveal.is-visible::after {
+  content: "";
+  position: absolute;
+  width: 17px;
+  height: 2px;
+  background: #9b1010;
+  transform: rotate(-35deg);
+}
+
+.login-account-password-reveal:disabled {
+  color: #808080;
+  opacity: 0.75;
 }
 
 .login-account-checkbox {
@@ -599,15 +740,16 @@
 }
 
 .login-avatar-picker-window {
-  position: absolute;
+  position: fixed;
   left: 26px;
   top: 128px;
-  z-index: 2;
+  z-index: 42;
   display: none;
-  width: min(340px, calc(100% - 52px));
+  width: min(340px, calc(100vw - 16px));
   overflow: hidden;
-  border: 1px solid #003c74;
-  border-radius: 3px 3px 2px 2px;
+  border: var(--window-border-size) solid var(--window-border);
+  border-top-width: 0;
+  border-radius: var(--window-radius);
   background: #ece9d8;
   box-shadow: 7px 9px 18px rgba(0, 0, 0, 0.36);
 }
@@ -627,18 +769,6 @@
   font-size: 12px;
   font-weight: 700;
   text-shadow: 1px 1px #073282;
-}
-
-.login-avatar-picker-close {
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border: 1px solid #fff;
-  border-radius: 3px;
-  background: linear-gradient(#ffab8c, #e24b20 46%, #9e1708);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
 }
 
 .login-avatar-picker-body {
@@ -797,8 +927,39 @@
     display: none;
   }
 
-  .login-account-window {
+  .login-account-window.xp-window {
     width: min(520px, calc(100vw - 18px));
+  }
+
+  .login-account-brand-panel {
+    height: 96px;
+  }
+
+  .login-account-brand-logo {
+    top: calc(50% - 3px);
+    width: 260px;
+    grid-template-columns: 66px 168px;
+  }
+
+  .login-account-brand-flag {
+    width: 66px;
+  }
+
+  .login-account-brand-wordmark {
+    width: 166px;
+  }
+
+  .login-account-brand-left {
+    font-size: 10px;
+  }
+
+  .login-account-brand-right {
+    font-size: 16px;
+  }
+
+  .login-account-brand-right-mark {
+    font-size: 6px;
+    transform: translateY(-2px);
   }
 
   .login-account-form-tresc {
@@ -833,9 +994,7 @@
   }
 
   .login-avatar-picker-window {
-    left: 8px;
-    top: 68px;
-    width: calc(100% - 16px);
+    width: calc(100vw - 16px);
   }
 
   .login-account-avatar-grid {
