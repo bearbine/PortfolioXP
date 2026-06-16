@@ -14,7 +14,14 @@ export class PasekZadan {
     this.uslugi = uslugi;
     this.callbacks = callbacks;
     this.element = createElement("footer", { className: "taskbar" });
-    this.menuStart = new MenuStart({ rejestrAplikacji, uslugi, callbacks });
+    this.menuStart = new MenuStart({
+      rejestrAplikacji,
+      uslugi,
+      callbacks: {
+        ...callbacks,
+        onStartMenuOpenChange: (isOpen) => this.updateStartButtonPressed(isOpen)
+      }
+    });
     this.oknoZasobnika = new OknoZasobnika();
     this.centrumPowiadomienZasobnika = new CentrumPowiadomienZasobnika({
       serwisAutoryzacji: this.uslugi.serwisAutoryzacji,
@@ -59,7 +66,7 @@ export class PasekZadan {
     this.przyciskStart.addEventListener("click", () => {
       this.uslugi.menedzerDzwieku.play("menuCommand", { volume: 0.35 });
       this.menuStart.toggle();
-      setPressed(this.przyciskStart, this.menuStart.isOpen);
+      this.updateStartButtonPressed(this.menuStart.isOpen);
     });
 
     this.menedzerOkien.addEventListener("change", (event) => this.renderButtons(event.detail));
@@ -90,6 +97,13 @@ export class PasekZadan {
       });
     });
     return button;
+  }
+
+  updateStartButtonPressed(isOpen) {
+    if (!this.przyciskStart) {
+      return;
+    }
+    setPressed(this.przyciskStart, isOpen);
   }
 
   createTrayButton(label, icon, action) {

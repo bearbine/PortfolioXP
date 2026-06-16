@@ -114,7 +114,7 @@ export function naPublicznegoUzytkownika(row) {
   }
   return {
     databaseId: Number(row.id),
-    id: row.login,
+    id: createPublicProfileId(row),
     login: row.login,
     displayName: row.username,
     username: row.username,

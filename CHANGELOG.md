@@ -4,6 +4,36 @@ Wszystkie ważniejsze zmiany w projekcie **PortfolioXP** są zapisywane w tym pl
 
 ---
 
+## [0.1.59] - 2026-06-17
+
+### Dodano
+
+* Dodano dodatkowe sprawdzenie w teście autoryzacji dla kont tworzonych bez hasła.
+* Dodano kontrolę natychmiastowego logowania świeżo utworzonego konta bez hasła.
+
+### Zmieniono
+
+* Ujednolicono identyfikator profilu zwracany po rejestracji z identyfikatorem używanym na ekranie logowania.
+* Zmieniono obsługę stanu menu Start tak, aby pasek zadań był informowany o każdym otwarciu i zamknięciu menu.
+* Uporządkowano synchronizację stanu przycisku Start z faktycznym stanem menu Start.
+
+### Naprawiono
+
+* Naprawiono błąd, przez który przycisk Start mógł zostawać wizualnie wciśnięty po zamknięciu menu kliknięciem poza nim.
+* Naprawiono problem z logowaniem świeżo utworzonego konta bez hasła.
+* Naprawiono sytuację, w której nowe konto bez hasła wymagało odświeżenia strony przed poprawnym zalogowaniem.
+* Naprawiono niespójność między profilem dodanym lokalnie po rejestracji a profilem pobieranym później z backendu.
+* Naprawiono obsługę publicznego identyfikatora profilu w danych zwracanych przez backend po utworzeniu konta.
+
+### Refaktoryzacja
+
+* Wydzielono aktualizację stanu przycisku Start do osobnej metody w pasku zadań.
+* Dodano callback informujący pasek zadań o zmianie stanu menu Start.
+* Uporządkowano fragment autoryzacji odpowiedzialny za publiczne dane użytkownika zwracane do frontendu.
+
+
+---
+
 ## [0.1.58] - 2026-06-16
 
 ### Dodano

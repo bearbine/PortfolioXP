@@ -20,6 +20,9 @@ export class MenuStart {
     this.rejestrAplikacji = rejestrAplikacji;
     this.uslugi = uslugi;
     this.callbacks = callbacks;
+    this.onOpenChange = typeof callbacks?.onStartMenuOpenChange === "function"
+      ? callbacks.onStartMenuOpenChange
+      : null;
     this.element = createElement("section", { className: "start-menu", attrs: { "aria-label": "Start menu" } });
     this.isOpen = false;
     this.activeSubmenuKey = null;
@@ -411,9 +414,13 @@ export class MenuStart {
   }
 
   openMenu() {
+    if (this.isOpen) {
+      return;
+    }
     this.render();
     this.isOpen = true;
     this.element.classList.add("is-open");
+    this.onOpenChange?.(true);
     window.setTimeout(() => {
       document.addEventListener("pointerdown", this.handleOutsidePointer);
       document.addEventListener("pointermove", this.handlePointerMove);
@@ -421,6 +428,9 @@ export class MenuStart {
   }
 
   close() {
+    if (!this.isOpen) {
+      return;
+    }
     this.isOpen = false;
     this.closeRootSubmenu();
     this.setActiveSubmenu(null);
@@ -428,6 +438,7 @@ export class MenuStart {
     document.removeEventListener("pointerdown", this.handleOutsidePointer);
     document.removeEventListener("pointermove", this.handlePointerMove);
     this.lastPointerTarget = null;
+    this.onOpenChange?.(false);
   }
 
   handleOutsidePointer(event) {

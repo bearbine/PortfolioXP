@@ -135,7 +135,14 @@ try {
     }
   });
   assert(passwordless.user.passwordRequired === false, "register supports passwordless users");
+  assert(/^profile-[a-f0-9]{24}$/.test(passwordless.user.id), "register returns an opaque public profile id");
   await assertPasswordIsHashed(db, passwordlessLogin, "");
+
+  const immediatePasswordlessProfileLogin = await csrfRequest("/api/auth/login", {
+    method: "POST",
+    body: { profileId: passwordless.user.id, password: "", redirectUri: "/auth/callback" }
+  });
+  assert(Boolean(immediatePasswordlessProfileLogin.redirectTo), "new passwordless account can log in immediately by returned profile id");
 
   const rateLimitedRegister = await csrfRequest("/api/auth/register", {
     method: "POST",
